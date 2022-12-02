@@ -1,3 +1,4 @@
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
 class GradientButton extends StatelessWidget {
@@ -22,8 +23,8 @@ class GradientButton extends StatelessWidget {
           left: 20,
           right: 20,
         ),
-        height: 150,
-        width: MediaQuery.of(context).size.width,
+        height: Get.height * .2,
+        width: Get.width,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
           gradient: LinearGradient(
