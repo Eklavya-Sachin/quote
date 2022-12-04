@@ -22,32 +22,46 @@ class SearchAuthorQuoteView extends GetView<SearchAuthorQuoteController> {
               'Search Author Quote',
               style: TextStyle(fontSize: 22, color: Colors.black54),
             ),
-          ),
-          body: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25),
+            bottom: PreferredSize(
+              preferredSize: const Size.fromHeight(kToolbarHeight),
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(25, 0, 25, 10),
                 child: SearchTextField(
                   controller: controller.searchTextController,
                   search: controller.onSearch,
+                  hintText: 'Search Author Quote...',
+                  onCancellingSearch: controller.cancelSearch,
                 ),
               ),
-              const SizedBox(height: 10),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: 1,
-                  itemBuilder: (context, index) {
-                    return QuoteCard(
-                      title:
-                          'The greatest glory in living lies not in never falling, but in rising every time we fall.',
-                      text: 'Nelson Mandela',
-                      onFavoriteTap: () {},
-                    );
-                  },
-                ),
-              )
-            ],
+            ),
+          ),
+          body: Obx(
+            () => controller.isSearching.value
+                ? const Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : controller.quotes.isEmpty
+                    ? Center(
+                        child: Text(
+                          controller.bodySearchText.value,
+                          style: const TextStyle(
+                            fontSize: 20,
+                            color: Colors.black,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      )
+                    : ListView.builder(
+                        padding: const EdgeInsets.only(
+                          bottom: 20,
+                        ),
+                        itemCount: controller.quotes.length,
+                        itemBuilder: (context, index) {
+                          return QuoteCard(
+                            quote: controller.quotes[index],
+                          );
+                        },
+                      ),
           ),
         ),
       ),
