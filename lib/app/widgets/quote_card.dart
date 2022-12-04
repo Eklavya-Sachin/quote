@@ -1,16 +1,14 @@
 import 'package:get/get.dart';
+import '../services/local_db.dart';
+import '../models/quote_response.dart';
 import 'package:flutter/material.dart';
 
 class QuoteCard extends StatelessWidget {
-  final String title;
-  final String text;
-  final void Function() onFavoriteTap;
+  final Quote quote;
 
   const QuoteCard({
     super.key,
-    required this.title,
-    required this.text,
-    required this.onFavoriteTap,
+    required this.quote,
   });
 
   @override
@@ -50,7 +48,7 @@ class QuoteCard extends StatelessWidget {
           children: [
             Expanded(
               child: Text(
-                title,
+                quote.content ?? 'NA',
                 style: const TextStyle(
                   fontSize: 20,
                   color: Colors.white,
@@ -64,7 +62,7 @@ class QuoteCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  text,
+                  quote.author ?? 'NA',
                   style: const TextStyle(
                     fontSize: 20,
                     color: Colors.black54,
@@ -84,7 +82,9 @@ class QuoteCard extends StatelessWidget {
                       color: Colors.white,
                       size: 25,
                     ),
-                    onPressed: onFavoriteTap,
+                    onPressed: () {
+                      LocalDataBase.saveOrRemoveFromFavorite(quote);
+                    },
                   ),
                 )
               ],

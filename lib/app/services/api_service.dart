@@ -1,5 +1,6 @@
 import 'package:get/get_connect.dart';
-import 'package:quotes/app/models/quote_response.dart';
+import 'package:flutter/material.dart';
+import '../models/quote_response.dart';
 
 class ApiService {
   final _baseUrl = 'https://api.quotable.io/search/quotes';
@@ -13,8 +14,20 @@ class ApiService {
       _baseUrl,
       query: {
         'query': searchQuery,
-        'limit': limit,
+        'limit': limit.toString(),
       },
+    );
+
+    debugPrint(
+      '\n╔══════════════════════════ Response ══════════════════════════\n'
+      '╟ REQUEST ║ ${response.request?.method.toUpperCase()}\n'
+      '╟ url: ${response.request?.url}\n'
+      '╟ Headers: ${response.request?.headers}\n'
+      '╟ Body: ${response.request?.bodyBytes.map((event) => event.asMap().toString())}\n'
+      '╟ Status Code: ${response.statusCode}\n'
+      '╟ Data: ${response.bodyString?.toString() ?? ''}'
+      '\n╚══════════════════════════ Response ══════════════════════════\n',
+      wrapWidth: 1024,
     );
 
     if (response.isOk) {

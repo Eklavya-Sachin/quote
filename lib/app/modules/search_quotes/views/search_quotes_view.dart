@@ -38,12 +38,7 @@ class SearchQuotesView extends GetView<SearchQuotesController> {
                 child: ListView.builder(
                   itemCount: 4,
                   itemBuilder: (context, index) {
-                    return QuoteCard(
-                      title:
-                          'The greatest glory in living lies not in never falling, but in rising every time we fall.',
-                      text: 'Nelson Mandela',
-                      onFavoriteTap: () {},
-                    );
+                    return SizedBox();
                   },
                 ),
               )
