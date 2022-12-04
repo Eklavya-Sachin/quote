@@ -19,7 +19,7 @@ class QuoteCard extends StatelessWidget {
         vertical: 10,
       ),
       width: Get.width,
-      height: Get.height * .25,
+      height: Get.height * .3,
       decoration: BoxDecoration(
         color: Colors.black,
         borderRadius: BorderRadius.circular(15),
@@ -54,21 +54,23 @@ class QuoteCard extends StatelessWidget {
                   color: Colors.white,
                 ),
                 overflow: TextOverflow.ellipsis,
-                maxLines: 4,
+                maxLines: 5,
                 textAlign: TextAlign.left,
               ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  quote.author ?? 'NA',
-                  style: const TextStyle(
-                    fontSize: 20,
-                    color: Colors.black54,
+                Expanded(
+                  child: Text(
+                    quote.author ?? 'NA',
+                    style: const TextStyle(
+                      fontSize: 20,
+                      color: Colors.black54,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
                   ),
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
                 ),
                 Container(
                   height: 40,

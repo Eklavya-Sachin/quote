@@ -6,6 +6,9 @@ import 'app/services/api_service.dart';
 void main() {
   Get.lazyPut<ApiService>(
     () => ApiService(),
+
+    /// This property will call disposed instances.
+    fenix: true,
   );
 
   runApp(
