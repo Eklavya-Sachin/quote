@@ -23,6 +23,11 @@ class SearchQuotesController extends GetxController {
   }
 
   Future<void> onSearch(String query) async {
+    if (GetUtils.isBlank(query)!) {
+      Get.snackbar('Invalid Search!', 'Can\'t search blank keyword.');
+      return;
+    }
+
     isSearching.value = true;
     quotes.value = await Get.find<ApiService>().getQuotes(
       query,
