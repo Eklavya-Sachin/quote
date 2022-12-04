@@ -1,5 +1,5 @@
+// ignore_for_file: constant_identifier_names
 import 'package:get/get.dart';
-
 import '../modules/favourite_quotes/bindings/favourite_quotes_binding.dart';
 import '../modules/favourite_quotes/views/favourite_quotes_view.dart';
 import '../modules/home/bindings/home_binding.dart';
@@ -8,7 +8,6 @@ import '../modules/search_author_quote/bindings/search_author_quote_binding.dart
 import '../modules/search_author_quote/views/search_author_quote_view.dart';
 import '../modules/search_quotes/bindings/search_quotes_binding.dart';
 import '../modules/search_quotes/views/search_quotes_view.dart';
-
 part 'app_routes.dart';
 
 class AppPages {
