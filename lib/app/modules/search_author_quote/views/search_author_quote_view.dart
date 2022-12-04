@@ -20,8 +20,12 @@ class SearchAuthorQuoteView extends GetView<SearchAuthorQuoteController> {
             leading: const BackButton(color: Colors.black54),
             title: const Text(
               'Search Author Quote',
-              style: TextStyle(fontSize: 22, color: Colors.black54),
+              style: TextStyle(
+                fontSize: 20,
+                color: Colors.black54,
+              ),
             ),
+            centerTitle: true,
             bottom: PreferredSize(
               preferredSize: const Size.fromHeight(kToolbarHeight),
               child: Padding(
