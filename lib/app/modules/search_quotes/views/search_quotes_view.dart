@@ -34,6 +34,38 @@ class SearchQuotesView extends GetView<SearchQuotesController> {
                 ),
               ),
             ),
+            actions: [
+              Padding(
+                padding: const EdgeInsets.only(right: 20),
+                child: Obx(
+                  () => Center(
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton(
+                        // Initial Value
+                        value: controller.searchLimit.value,
+                        // Down Arrow Icon
+                        icon: const Icon(Icons.keyboard_arrow_down),
+                        items: List.generate(
+                          100,
+                          (index) => DropdownMenuItem(
+                            value: index + 1,
+                            child: Text(
+                              (index + 1).toString(),
+                              style: const TextStyle(
+                                fontSize: 18,
+                                color: Colors.black54,
+                              ),
+                            ),
+                          ),
+                        ),
+                        onChanged: controller.updateSearchLimit,
+                        iconSize: 30,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
           body: Obx(
             () => controller.isSearching.value

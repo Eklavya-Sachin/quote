@@ -8,6 +8,7 @@ class SearchQuotesController extends GetxController {
   RxList<Quote> quotes = <Quote>[].obs;
   RxBool isSearching = false.obs;
   RxString bodySearchText = 'Search Any Quote.'.obs;
+  RxInt searchLimit = 10.obs;
 
   @override
   void onInit() {
@@ -25,7 +26,7 @@ class SearchQuotesController extends GetxController {
     isSearching.value = true;
     quotes.value = await Get.find<ApiService>().getQuotes(
       query,
-      20,
+      searchLimit.value,
     );
 
     if (quotes.isEmpty) {
@@ -38,5 +39,9 @@ class SearchQuotesController extends GetxController {
   void cancelSearch() {
     bodySearchText.value = 'Search Any Quote.';
     quotes.value = [];
+  }
+
+  void updateSearchLimit(limit) {
+    searchLimit.value = limit;
   }
 }
