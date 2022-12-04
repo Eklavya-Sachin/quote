@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import '../../../widgets/quote_card.dart';
+import '../../../widgets/search_text_field.dart';
 import '../controllers/search_author_quote_controller.dart';
 
 class SearchAuthorQuoteView extends GetView<SearchAuthorQuoteController> {
@@ -25,35 +26,14 @@ class SearchAuthorQuoteView extends GetView<SearchAuthorQuoteController> {
           body: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                margin: const EdgeInsets.only(right: 20, left: 20),
-                height: 50,
-                child: TextField(
-                  onChanged: (value) {},
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    hintText: 'search',
-                    prefixIcon: const Padding(
-                      padding: EdgeInsets.only(left: 8.0),
-                      child: Icon(
-                        Icons.search,
-                      ),
-                    ),
-                    fillColor: Colors.black12,
-                    filled: true,
-                    prefixIconColor: Colors.white,
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30),
-                      borderSide: const BorderSide(
-                        color: Colors.black38,
-                      ),
-                    ),
-                  ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25),
+                child: SearchTextField(
+                  controller: controller.searchTextController,
+                  search: controller.onSearch,
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 10),
               Expanded(
                 child: ListView.builder(
                   itemCount: 1,
