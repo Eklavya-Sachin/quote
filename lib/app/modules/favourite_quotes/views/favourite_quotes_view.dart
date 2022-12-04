@@ -17,35 +17,69 @@ class FavouriteQuotesView extends GetView<FavouriteQuotesController> {
           appBar: AppBar(
             elevation: 0,
             backgroundColor: Colors.white,
-            leading: const BackButton(color: Colors.black54),
+            leading: const BackButton(
+              color: Colors.black54,
+            ),
             title: const Text(
-              'Favourite Quote',
+              'Favourite Quotes',
               style: TextStyle(
                 fontSize: 20,
                 color: Colors.black54,
               ),
             ),
-          ),
-          body: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+            centerTitle: true,
+            actions: [
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25),
-                child: SearchTextField(
-                  controller: controller.searchTextController,
-                  search: controller.onSearch,
-                ),
-              ),
-              const SizedBox(height: 10),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: 4,
-                  itemBuilder: (context, index) {
-                    return SizedBox();
-                  },
+                padding: const EdgeInsets.all(8.0),
+                child: IconButton(
+                  onPressed: controller.deleteAllFavouriteQuotes,
+                  icon: const Icon(
+                    Icons.delete,
+                    color: Colors.black54,
+                  ),
                 ),
               )
             ],
+            bottom: PreferredSize(
+              preferredSize: const Size.fromHeight(kToolbarHeight),
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(25, 0, 25, 10),
+                child: SearchTextField(
+                  controller: controller.searchTextController,
+                  search: controller.onSearch,
+                  hintText: 'Search Author Quote...',
+                  onCancellingSearch: controller.cancelSearch,
+                ),
+              ),
+            ),
+          ),
+          body: Obx(
+            () => controller.isLoadingFromDB.value
+                ? const Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : controller.quotes.isEmpty
+                    ? const Center(
+                        child: Text(
+                          'No quote has been added as Favourite',
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.black,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      )
+                    : ListView.builder(
+                        padding: const EdgeInsets.only(
+                          bottom: 20,
+                        ),
+                        itemCount: controller.quotes.length,
+                        itemBuilder: (context, index) {
+                          return QuoteCard(
+                            quote: controller.quotes[index],
+                          );
+                        },
+                      ),
           ),
         ),
       ),
