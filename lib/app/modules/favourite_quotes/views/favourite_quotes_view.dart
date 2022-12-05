@@ -49,6 +49,7 @@ class FavouriteQuotesView extends GetView<FavouriteQuotesController> {
                   search: controller.onSearch,
                   hintText: 'Search Author Quote...',
                   onCancellingSearch: controller.cancelSearch,
+                  isAlsoSearchOnChange: true,
                 ),
               ),
             ),
@@ -58,10 +59,10 @@ class FavouriteQuotesView extends GetView<FavouriteQuotesController> {
                 ? const Center(
                     child: CircularProgressIndicator(),
                   )
-                : controller.quotes.isEmpty
+                : controller.favouriteQuotes.isEmpty
                     ? const Center(
                         child: Text(
-                          'No quote has been added as Favourite',
+                          'No Favourite Quotes Available!',
                           style: TextStyle(
                             fontSize: 20,
                             color: Colors.black,
@@ -73,10 +74,10 @@ class FavouriteQuotesView extends GetView<FavouriteQuotesController> {
                         padding: const EdgeInsets.only(
                           bottom: 20,
                         ),
-                        itemCount: controller.quotes.length,
+                        itemCount: controller.favouriteQuotes.length,
                         itemBuilder: (context, index) {
                           return QuoteCard(
-                            quote: controller.quotes[index],
+                            quote: controller.favouriteQuotes[index],
                           );
                         },
                       ),

@@ -1,12 +1,13 @@
 import 'package:get/get.dart';
-import '../services/local_db.dart';
+import '../services/db_service.dart';
 import '../models/quote_response.dart';
 import 'package:flutter/material.dart';
 
 class QuoteCard extends StatelessWidget {
   final Quote quote;
+  final _dbService = Get.find<DataBaseService>();
 
-  const QuoteCard({
+  QuoteCard({
     super.key,
     required this.quote,
   });
@@ -78,14 +79,32 @@ class QuoteCard extends StatelessWidget {
                     color: Colors.black.withOpacity(0.4),
                     borderRadius: BorderRadius.circular(15),
                   ),
-                  child: IconButton(
-                    icon: const Icon(
-                      Icons.favorite_border,
-                      color: Colors.white,
-                      size: 25,
-                    ),
-                    onPressed: () {
-                      LocalDataBase.saveOrRemoveFromFavorite(quote);
+                  child: FutureBuilder<bool>(
+                    future: _dbService.isFavouriteQuote(quote),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const SizedBox();
+                      }
+
+                      RxBool isFavourite = (snapshot.data ?? false).obs;
+                      return Obx(
+                        () => IconButton(
+                          icon: Icon(
+                            isFavourite.value
+                                ? Icons.favorite
+                                : Icons.favorite_border,
+                            color:
+                                isFavourite.value ? Colors.red : Colors.white,
+                            size: 25,
+                          ),
+                          onPressed: () async {
+                            await _dbService.addOrRemoveFromFavorite(
+                              quote,
+                            );
+                            isFavourite.toggle();
+                          },
+                        ),
+                      );
                     },
                   ),
                 )

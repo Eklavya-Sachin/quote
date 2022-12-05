@@ -1,16 +1,19 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:quotes/app/services/db_service.dart';
 import '../../../models/quote_response.dart';
 
 class FavouriteQuotesController extends GetxController {
+  final _dbService = Get.find<DataBaseService>();
   late TextEditingController searchTextController;
-  RxList<Quote> quotes = <Quote>[].obs;
+
+  RxList<Quote> favouriteQuotes = <Quote>[].obs;
   RxBool isLoadingFromDB = false.obs;
 
   @override
-  void onInit() {
+  Future<void> onInit() async {
     searchTextController = TextEditingController();
-    getQuotesFromDB();
+    await getQuotesFromDB();
     super.onInit();
   }
 
@@ -20,30 +23,38 @@ class FavouriteQuotesController extends GetxController {
     super.onClose();
   }
 
-  void getQuotesFromDB() {}
+  Future<void> getQuotesFromDB() async {
+    isLoadingFromDB.value = true;
+    favouriteQuotes.value = await _dbService.getAllFavouriteQuotes();
+    isLoadingFromDB.value = false;
+  }
 
   void onSearch(String query) {
     if (GetUtils.isBlank(query)!) {
-      Get.snackbar('Invalid Search!', 'Can\'t search blank keyword.');
-      return;
+      cancelSearch();
     }
 
     query = query.toLowerCase();
 
-    quotes.value = quotes
+    favouriteQuotes.value = favouriteQuotes
         .where(
           (searchedQuote) =>
-              (searchedQuote.author?.toLowerCase().contains(query) ?? false) ||
-              (searchedQuote.author?.toLowerCase().startsWith(query) ??
+              (searchedQuote.content?.toLowerCase().contains(query) ?? false) ||
+              (searchedQuote.content?.toLowerCase().startsWith(query) ??
                   false) ||
-              (searchedQuote.author?.toLowerCase().endsWith(query) ?? false),
+              (searchedQuote.content?.toLowerCase().endsWith(query) ?? false),
         )
         .toList();
   }
 
-  void cancelSearch() {
-    getQuotesFromDB();
+  Future<void> cancelSearch() async {
+    await getQuotesFromDB();
   }
 
-  void deleteAllFavouriteQuotes() {}
+  Future<void> deleteAllFavouriteQuotes() async {
+    isLoadingFromDB.value = true;
+    _dbService.deleteAllFavoriteQuotes();
+    favouriteQuotes.clear();
+    isLoadingFromDB.value = false;
+  }
 }
