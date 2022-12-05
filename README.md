@@ -1,6 +1,6 @@
 # quotes
 
-A new Flutter project.
+A Quote Application where you can search any qoute.
 
 ## Getting Started
 
